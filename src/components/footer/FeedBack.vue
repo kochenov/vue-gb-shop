@@ -1,0 +1,167 @@
+<template>
+  <section class="feedback">
+    <h2 class="hidden">Feedback</h2>
+    <div class="container">
+      <div class="feedback-wrapper">
+        <div class="feedback__col-left">
+          <img
+            class="feedback__img-manager"
+            src="/img/footer/face.png"
+            alt=""
+          />
+          <p class="feedback__text">
+            "Vestibulum quis porttitor dui! Quisque viverra nunc mi, a pulvinar
+            purus condimentum"
+          </p>
+        </div>
+        <div class="feedback__col-right">
+          <h2 class="feedback__title-subscribe">SUBSCRIBE</h2>
+          <p class="feedback__description-subscribe">
+            FOR OUR NEWLETTER AND PROMOTION
+          </p>
+          <form class="feedback__form-subscribe" action="#">
+            <input
+              class="feedback__subscribe-input-email"
+              name="email"
+              type="email"
+              placeholder="Enter Your Email"
+            /><input
+              class="feedback__subscribe-input-button"
+              type="submit"
+              value="Subscribe"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+<style lang="scss">
+.feedback {
+  //background-color: rgba(244, 244, 244, 0.7);
+  background-image: linear-gradient(
+      90deg,
+      rgba(244, 244, 244, 0.7) 100%,
+      rgba(244, 244, 244, 0.7) 100%
+    ),
+    url(/img/footer/background-section1.jpg);
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  background-size: cover;
+
+  .feedback-wrapper {
+    padding-top: 96px;
+    padding-bottom: 156px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__col-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 359px;
+  }
+
+  &__text {
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    font-style: italic;
+    color: #222224;
+    padding-top: 20px;
+  }
+
+  &__col-right {
+    width: 557px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 24px;
+    line-height: 167.2%;
+    text-align: center;
+    color: #222224;
+  }
+  &__title-subscribe {
+    padding-top: 54px;
+  }
+  &__description-subscribe {
+    padding-bottom: 32px;
+  }
+
+  &__form-subscribe {
+    display: flex;
+
+    input {
+      border: 0;
+      height: 49px;
+      //padding: 7px 22px;
+    }
+  }
+  &__subscribe-input-email {
+    background: #e1e1e1;
+    width: 259px;
+    border-radius: 30px 0px 0 30px;
+    width: 100% !important;
+  }
+  &__subscribe-input-email {
+    background: #e1e1e1;
+    width: 259px;
+    border-radius: 30px 0px 0 30px;
+    padding: 7px 22px;
+  }
+  &__subscribe-input-button {
+    width: 100px;
+    background: #f16d7f;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0 19px;
+    border-radius: 0px 30px 30px 0px;
+    &:hover {
+      background: #606060;
+    }
+  }
+}
+
+/* tablet */
+@media (max-width: 1180px) {
+  .feedback-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .feedback__text {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .feedback__title-subscribe {
+    font-size: 24px;
+    line-height: 162%;
+  }
+  .feedback__description-subscribe {
+    font-size: 18px;
+    line-height: 162%;
+  }
+}
+
+/*mobile*/
+@media (max-width: 767px) {
+  .feedback__col-right {
+    width: 340px;
+  }
+  .feedback__text {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .feedback__title-subscribe {
+    font-size: 24px;
+    line-height: 153.2%;
+  }
+  .feedback__description-subscribe {
+    font-size: 14px;
+    line-height: 153.2%;
+  }
+}
+</style>
