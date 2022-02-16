@@ -1,5 +1,4 @@
 <template>
-  <input id="menu" type="checkbox" />
   <nav class="menu">
     <label class="menu__close" for="menu">
       <img src="/img/menu-close.png" alt=""
@@ -44,10 +43,10 @@
   overflow: hidden;
   box-shadow: 6px 4px 35px rgba(0, 0, 0, 0.21);
   background: #ffffff;
-  transform: translateY(-120%);
+  transform: translateY(0);
   position: absolute;
   transition: transform 0.3s;
-  top: 77.5px;
+  top: 0;
   right: 0px;
   width: 232px;
   min-height: 764px;

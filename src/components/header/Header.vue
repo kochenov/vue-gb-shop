@@ -21,8 +21,11 @@
       </div>
       <ul class="header-col-right">
         <li class="header-col-right__menu-button-wrap">
-          <label class="header-col-right__menu-button-label" for="menu"
-            ><svg
+          <button
+            @click.prevent="onMenu = !onMenu"
+            class="header-col-right__menu-button-label"
+          >
+            <svg
               width="32"
               height="29"
               viewBox="0 0 32 23"
@@ -31,8 +34,9 @@
             >
               <path
                 d="M0 23V20.31H32V23H0ZM0 12.76V10.07H32V12.76H0ZM0 2.69V0H32V2.69H0Z"
-              ></path></svg
-          ></label>
+              ></path>
+            </svg>
+          </button>
         </li>
         <li class="sm-hidden">
           <a class="header-col-right__login-link" href="registration.html">
@@ -72,8 +76,8 @@
       </ul>
       <Cart :cartOn="this.$root.cartOn" :products="cart" />
     </div>
-    <TopNav />
   </header>
+  <TopNav v-show="onMenu" />
 </template>
 <script>
 import TopNav from "@/components/header/TopNav";
@@ -82,6 +86,7 @@ export default {
   data() {
     return {
       cartStatus: false,
+      onMenu: false,
       cart: this.$root.cart,
     };
   },
@@ -103,12 +108,6 @@ export default {
   z-index: 9999;
   background-color: #222222;
   padding: 18px 0;
-
-  input[type="checkbox"]:checked ~ .menu {
-    //display: block !important;
-
-    transform: translateY(0) !important;
-  }
 
   i {
     color: #ffffff;
@@ -165,6 +164,9 @@ export default {
     color: #ffffff;
     cursor: pointer;
     font-size: 35px;
+
+    border: none;
+    background: transparent;
   }
 
   // ссылка на страницу входа
@@ -209,9 +211,5 @@ export default {
 
 .header-wrapper {
   position: relative;
-}
-
-.hidden-all {
-  display: none !important;
 }
 </style>

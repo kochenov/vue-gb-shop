@@ -46,6 +46,9 @@ body {
   margin-top: 78px;
   font-family: "Lato", sans-serif;
 }
+#app {
+  position: relative;
+}
 
 a {
   text-decoration: none;
