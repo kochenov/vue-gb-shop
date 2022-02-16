@@ -1,8 +1,8 @@
 <template>
   <nav class="menu">
-    <label class="menu__close" for="menu">
-      <img src="/img/menu-close.png" alt=""
-    /></label>
+    <button class="menu__close" @click.prevent="$emit('closeMenu')">
+      <img src="/img/menu-close.png" alt="" />
+    </button>
     <p class="menu__title">MENU</p>
     <ul class="menu__items">
       <li class="menu__item">
@@ -59,6 +59,8 @@
     padding-bottom: 0;
     top: 0;
     right: 0;
+    border: none;
+    background: transparent;
     cursor: pointer;
     position: absolute;
   }

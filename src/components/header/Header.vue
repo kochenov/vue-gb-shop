@@ -77,7 +77,7 @@
       <Cart :cartOn="this.$root.cartOn" :products="cart" />
     </div>
   </header>
-  <TopNav v-show="onMenu" />
+  <TopNav @closeMenu="onMenu = false" v-show="onMenu" />
 </template>
 <script>
 import TopNav from "@/components/header/TopNav";
