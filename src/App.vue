@@ -1,19 +1,15 @@
 <template>
   <Header :cart="cart" />
-  <component :is="layout">
-    <router-view />
-  </component>
+  <router-view />
   <FeedBack />
   <Footer />
 </template>
 <script>
-import IndexLayout from "@/layouts/IndexLayout";
 import Header from "@/components/header/Header";
 import FeedBack from "@/components/footer/FeedBack";
 import Footer from "@/components/footer/Footer";
 export default {
   components: {
-    IndexLayout,
     Header,
     Footer,
     FeedBack,
