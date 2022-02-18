@@ -1,6 +1,6 @@
 <template>
   <Header :cart="cart" :cartInfo="cartInfo" />
-  <router-view :products="products" />
+  <router-view />
   <FeedBack />
   <Footer />
 </template>
@@ -14,83 +14,13 @@ export default {
     Footer,
     FeedBack,
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("loadProducts");
+    this.$store.dispatch("loadProductsFromCart");
+  },
   data() {
     return {
-      products: [
-        {
-          id: 1,
-          title: "Product 1",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/1.png",
-          price: 30,
-        },
-        {
-          id: 2,
-          title: "Product 2",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/2.png",
-          price: 35,
-        },
-        {
-          id: 3,
-          title: "Product 3",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/3.png",
-          price: 45,
-        },
-        {
-          id: 4,
-          title: "Product 4",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/4.png",
-          price: 21,
-        },
-        {
-          id: 5,
-          title: "Product 5",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/5.png",
-          price: 39,
-        },
-        {
-          id: 6,
-          title: "Product 6",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/6.png",
-          price: 44,
-        },
-        {
-          id: 7,
-          title: "Product 7",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/7.png",
-          price: 38,
-        },
-        {
-          id: 8,
-          title: "Product 8",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/8.png",
-          price: 20,
-        },
-        {
-          id: 9,
-          title: "Product 9",
-          description:
-            "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
-          image: "/img/card/9.png",
-          price: 28,
-        },
-      ],
+      products: [],
       cartOn: false,
       cart: [],
       cartInfo: {
@@ -100,6 +30,14 @@ export default {
     };
   },
   methods: {
+    // coutnProductsInCart(products) {
+    //   let count = 0;
+    //   products.forEach((item) => {
+    //     count += item.count;
+    //   });
+
+    //   this.$store.setCountProductsInCart = count;
+    // },
     /**
      * Добаление товара в корзину
      * @param {*} product

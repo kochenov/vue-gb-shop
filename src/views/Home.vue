@@ -1,7 +1,7 @@
 <template>
   <Promo />
   <Categories />
-  <HomeCatalog :products="products" />
+  <HomeCatalog />
   <Features />
 </template>
 <script>
@@ -10,7 +10,7 @@ import Categories from "@/components/home/Categories";
 import HomeCatalog from "@/components/home/HomeCatalog";
 import Features from "@/components/home/Features";
 export default {
-  props: { products: Array },
+  computed: {},
   components: {
     Promo,
     Categories,

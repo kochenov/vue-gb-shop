@@ -1,23 +1,41 @@
 import { createStore } from "vuex";
+import Cart from "./cart";
+import axios from "axios";
 
 export default createStore({
-  state: {
-    cart: [],
-  },
+  state: { products: [] },
   mutations: {
-    addProductInCart(state, product) {
-      state.cart.push(product);
+    setProducts: (state, products) => {
+      state.products = products;
     },
   },
   actions: {
-    addProductInCart({ commit }, product) {
-      commit("addProductInCart", product);
+    loadProducts({ commit }) {
+      axios({
+        method: "GET",
+        url: `/api/v1/catalog`,
+        params: {
+          //user_key_id: "USER_KEY_ID",
+        },
+        data: {},
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => {
+          commit("setProducts", response.data);
+          //console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.loadingDataApi = false;
+        });
     },
   },
   getters: {
-    getCart(state) {
-      return state.posts;
-    },
+    getProducts: (state) => [...state.products],
   },
-  modules: {},
+  modules: { Cart },
 });

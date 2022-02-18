@@ -17,9 +17,13 @@ export default {
   components: {
     ProductList,
   },
-  props: { products: Array },
   data() {
     return {};
+  },
+  computed: {
+    products() {
+      return this.$store.getters.getProducts;
+    },
   },
   methods: {},
 };

@@ -26,14 +26,14 @@
             <td class="cart-product-count">{{ product.count }}</td>
             <td class="catr-product-price">${{ product.price }}</td>
             <td class="catr-product-price-count">
-              ${{ product.priceToCount }}
+              ${{ product.price * product.count }}
             </td>
           </tr>
         </tbody>
       </table>
       <p>
         Итого:
-        <span class="products-price-count">${{ cartInfo.cartSumPrice }}</span>
+        <span class="products-price-count">${{ cartSumPrice }}</span>
       </p>
       <a href="cart.html">Перейти к оформлению</a>
     </div>
@@ -42,11 +42,6 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  props: {
-    cartOn: Boolean,
-    products: Array,
-    cartInfo: Object,
-  },
   data() {
     return {
       //cartOn: false,
@@ -54,7 +49,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getCart"]),
+    ...mapGetters({
+      cartOn: "getCartStatus",
+      products: "getCart",
+      cartSumPrice: "getSumPriceProductInCart",
+    }),
   },
   methods: {
     delProduct(price, index) {
