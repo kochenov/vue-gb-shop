@@ -49,42 +49,12 @@
 <script>
 export default {
   props: { products: Array },
+  data() {
+    return {};
+  },
   methods: {
     addCart(product) {
-      // Если в корзине есть товар
-      if (this.$root.cart.length > 0) {
-        if (this.$root.cart.find((item) => item.id === product.id)) {
-          let indx = this.$root.cart.findIndex(
-            (item) => item.id === product.id
-          );
-          // Прибавляем на одну единицу
-          this.$root.cart[indx].count++;
-          // Генерируем цену за количество товаров
-          this.$root.cart[indx].priceToCount = product.price * product.count;
-          console.log("Тавар в корзине");
-        } else {
-          product.count = 1;
-          product.priceToCount = product.price * product.count;
-          // Добавляем в массив товар
-          this.$root.cart.push(product);
-          console.log("Тавар не в корзине");
-        }
-      } else {
-        product.count = 1;
-        product.priceToCount = product.price * product.count;
-        this.$root.cart.push(product);
-        console.log("Продукт добавлен в корзину");
-      }
-      this.$root.countProductsInCart++;
-      let sum = 0;
-      let countProduct = 0;
-      this.$root.cart.forEach((item) => {
-        sum = sum + item.priceToCount;
-        countProduct = countProduct + item.count;
-      });
-      this.$root.cartSumPrice = sum;
-      this.$root.countProductsInCart = countProduct;
-      this.$root.cartOn = true;
+      this.$root.addCart(product);
     },
   },
 };

@@ -33,23 +33,28 @@
       </table>
       <p>
         Итого:
-        <span class="products-price-count">${{ this.$root.cartSumPrice }}</span>
+        <span class="products-price-count">${{ cartInfo.cartSumPrice }}</span>
       </p>
       <a href="cart.html">Перейти к оформлению</a>
     </div>
   </Transition>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     cartOn: Boolean,
     products: Array,
+    cartInfo: Object,
   },
   data() {
     return {
       //cartOn: false,
       //cartSumPrice: this.$root.cartSumPrice,
     };
+  },
+  computed: {
+    ...mapGetters(["getCart"]),
   },
   methods: {
     delProduct(price, index) {

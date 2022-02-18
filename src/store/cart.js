@@ -1,6 +1,4 @@
-import { createStore } from "vuex";
-
-export default createStore({
+export default {
   state: {
     cart: [],
   },
@@ -19,5 +17,4 @@ export default createStore({
       return state.posts;
     },
   },
-  modules: {},
-});
+};
