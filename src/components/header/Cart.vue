@@ -9,24 +9,29 @@
             <th>Цена за штуку</th>
             <th>Итого</th>
           </tr>
-          {{
-            products.lengh
-          }}
+
           <tr
-            class="cart-product-item"
-            v-for="(product, index) in products"
+            v-for="(product, index) in productsMax"
             :key="index"
+            class="cart-product-item"
           >
             <td class="cart-product-name">
               <span>{{ product.title }}</span>
-              <button @click="delProduct(product, index)" class="delete">
+              <button @click="delProduct(product)" class="delete">
                 <i class="fa-solid fa-delete-left"></i>
               </button>
             </td>
-            <td class="cart-product-count">{{ product.count }}</td>
+            <td class="cart-product-count">
+              {{ product.count }}
+            </td>
             <td class="catr-product-price">${{ product.price }}</td>
             <td class="catr-product-price-count">
               ${{ product.price * product.count }}
+            </td>
+          </tr>
+          <tr v-if="products.length > 5">
+            <td colspan="4" class="max-product">
+              <b>... и ещё {{ products.length - 5 }}</b>
             </td>
           </tr>
         </tbody>
@@ -54,10 +59,19 @@ export default {
       products: "getCart",
       cartSumPrice: "getSumPriceProductInCart",
     }),
+    productsMax() {
+      let prod = null;
+      if (this.products.length < 5) {
+        prod = this.products;
+      } else {
+        prod = this.products.slice(0, 5);
+      }
+      return prod;
+    },
   },
   methods: {
-    delProduct(price, index) {
-      this.$root.delCart(price, index);
+    delProduct(product) {
+      this.$store.dispatch("actionDeleteProductFromCart", product);
     },
   },
 };
@@ -130,6 +144,10 @@ export default {
 
     margin: 2px auto;
   }
+}
+.max-product {
+  text-align: center;
+  border-top: 1px solid #ccc;
 }
 
 .bounce-enter-active {

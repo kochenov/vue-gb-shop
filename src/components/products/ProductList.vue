@@ -47,6 +47,7 @@
   </ul>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: { products: Array },
   data() {
@@ -54,10 +55,26 @@ export default {
   },
   methods: {
     addCart(product) {
-      this.$store.dispatch("actionAddProductToCart", product);
+      let productCart = this.cartProducts.find(
+        (item) => item.id === product.id
+      );
+      console.log(productCart);
+      // Если товар есть в корзине
+      if (productCart) {
+        this.$store.dispatch("actionEditProductFromCart", productCart);
+      } else {
+        this.$store.dispatch("actionAddProductToCart", product);
+      }
+
       //this.$root.addCart(product);
     },
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      //cartOn: "getCartStatus",
+      cartProducts: "getCart",
+      //cartSumPrice: "getSumPriceProductInCart",
+    }),
+  },
 };
 </script>

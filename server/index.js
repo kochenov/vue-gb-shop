@@ -36,7 +36,10 @@ app.post("/api/v1/cart", (req, res) => {
   fs.readFile(cart_path, "utf-8", (err, data) => {
     if (!err) {
       const cart = JSON.parse(data);
-      cart.push(req.body);
+      let productCart = cart.find((item) => item.id === req.body.id);
+      if (typeof productCart === "undefined") {
+        cart.push(req.body);
+      }
       fs.writeFile(cart_path, JSON.stringify(cart), "utf-8", () => {
         res.sendStatus(201);
       });
@@ -45,7 +48,26 @@ app.post("/api/v1/cart", (req, res) => {
     }
   });
 });
-app.delete("/api/v1/cart/delite/:id", (req, res) => {
+app.put("/api/v1/cart/:id", (req, res) => {
+  fs.readFile(cart_path, "utf-8", (err, data) => {
+    if (!err) {
+      const cart = JSON.parse(data);
+
+      cart.forEach((product) => {
+        if (req.params.id == product.id) {
+          product.count = req.body.count;
+        }
+      });
+
+      fs.writeFile(cart_path, JSON.stringify(cart), "utf-8", () => {
+        res.sendStatus(201);
+      });
+    } else {
+      res.status(500).send(err);
+    }
+  });
+});
+app.delete("/api/v1/cart/delete/:id", (req, res) => {
   fs.readFile(cart_path, "utf-8", (err, data) => {
     if (!err) {
       const cart = JSON.parse(data);
@@ -56,7 +78,7 @@ app.delete("/api/v1/cart/delite/:id", (req, res) => {
         }
       });
       fs.writeFile(cart_path, JSON.stringify(cart), "utf-8", () => {
-        res.send(200);
+        res.send(201);
       });
     } else {
       res.status(500).send(err);

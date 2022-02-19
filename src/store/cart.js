@@ -20,7 +20,16 @@ export default {
     },
     // Добавление товара в корзину
     setAddToCart: (state, product) => {
-      state.cart.push(product);
+      let productCart = state.cart.find((item) => item.id === product.id);
+      if (typeof productCart === "undefined") {
+        state.cart.push(product);
+        ++state.countProductsInCart;
+      }
+    },
+    // Добавление товара в корзину
+    setEditCart: (state, product) => {
+      let indx = state.cart.findIndex((item) => item.id === product.id);
+      state.cart[indx] = product;
     },
     // Увеличение количества товара в корзине
     setCountProductsInCartPlus: (state) => {
@@ -30,7 +39,11 @@ export default {
     setCountProductsInCartMinus: (state) => {
       --state.countProductsInCart;
     },
-    setCountProductsInCart: (state, count) => {
+    setCountProductsInCart: (state, products) => {
+      let count = 0;
+      products.forEach((product) => {
+        count += product.count;
+      });
       state.countProductsInCart = count;
     },
     // Показывает корзину
@@ -53,6 +66,11 @@ export default {
       });
       state.sumPriceProductInCart = price;
     },
+    setCartDeliteProduct: (state, product) => {
+      let indx = state.cart.findIndex((p) => p.id == product.id);
+      state.countProductsInCart -= product.count;
+      state.cart.splice(indx, 1);
+    },
   },
   actions: {
     actionSwithCatrStatus({ commit }) {
@@ -72,12 +90,7 @@ export default {
       })
         .then((response) => {
           commit("setCart", response.data);
-          let count = 0;
-          response.data.forEach((product) => {
-            count += product.count;
-            console.log(count);
-          });
-          commit("setCountProductsInCart", count);
+          commit("setCountProductsInCart", response.data);
           commit("setSumPriceProductInCart");
         })
         .catch((error) => {
@@ -85,11 +98,38 @@ export default {
         })
         .finally(() => {});
     },
+    actionEditProductFromCart({ commit }, product) {
+      ++product.count;
+      axios({
+        method: "PUT",
+        url: `/api/v1/cart/${product.id}`,
+        params: {
+          //user_key_id: "USER_KEY_ID",
+        },
+        data: JSON.stringify(product),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then(() => {
+          //commit("setAddToCart", product);
+          commit("setCountProductsInCartPlus");
+          commit("setSumPriceProductInCart");
+          //console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
+      commit("setCartStatusOpen");
+    },
     actionAddProductToCart({ commit }, product) {
-      if (this.getters.getCart.find((item) => item.id === product.id)) {
-        console.log("Товар есть, значит изменить его");
-      } else {
-        console.log("Товара нет, значит нужно добавить");
+      let productCart = this.getters.getCart.find(
+        (item) => item.id === product.id
+      );
+      console.log(productCart);
+      if (typeof productCart === "undefined") {
+        // Если в корзине есть товар
         product.count = 1;
         axios({
           method: "POST",
@@ -104,7 +144,6 @@ export default {
         })
           .then(() => {
             commit("setAddToCart", product);
-            commit("setCountProductsInCartPlus");
             commit("setSumPriceProductInCart");
             //console.log(response.data);
           })
@@ -112,8 +151,31 @@ export default {
             console.log(error);
           })
           .finally(() => {});
+
+        commit("setCartStatusOpen");
       }
-      commit("setCartStatusOpen");
+    },
+    actionDeleteProductFromCart({ commit }, product) {
+      axios({
+        method: "DELETE",
+        url: `/api/v1/cart/delete/${product.id}`,
+        params: {
+          //user_key_id: "USER_KEY_ID",
+        },
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then(() => {
+          commit("setCartDeliteProduct", product);
+          commit("setSumPriceProductInCart");
+
+          //console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
     },
   },
 };
