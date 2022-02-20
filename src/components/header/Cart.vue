@@ -47,7 +47,7 @@
           Итого:
           <span class="products-price-count">${{ cartSumPrice }}</span>
         </p>
-        <a href="cart.html">Перейти к оформлению</a>
+        <router-link to="/cart">Перейти к оформлению</router-link>
       </div>
       <div v-else class="no-products">
         <p>

@@ -1,5 +1,5 @@
 <template>
-  <Header :cart="cart" :cartInfo="cartInfo" />
+  <Header />
   <router-view />
   <FeedBack />
   <Footer />
@@ -19,78 +19,9 @@ export default {
     this.$store.dispatch("loadProductsFromCart");
   },
   data() {
-    return {
-      products: [],
-      cartOn: false,
-      cart: [],
-      cartInfo: {
-        countProductsInCart: 0,
-        cartSumPrice: 0,
-      },
-    };
+    return {};
   },
-  methods: {
-    // coutnProductsInCart(products) {
-    //   let count = 0;
-    //   products.forEach((item) => {
-    //     count += item.count;
-    //   });
-
-    //   this.$store.setCountProductsInCart = count;
-    // },
-    /**
-     * Добаление товара в корзину
-     * @param {*} product
-     */
-    addCart(product) {
-      // Если в корзине уже есть товар
-      if (this.cart.length > 0) {
-        // Если найтен текущей товар в корзине
-        if (this.cart.find((item) => item.id === product.id)) {
-          // Узнаю текущий index товара в массиве корзины
-          let indx = this.cart.findIndex((item) => item.id === product.id);
-          // Прибавляю на одну единицу количество товара
-          this.cart[indx].count++;
-          // Генерируем цену за количество товаров
-          this.cart[indx].priceToCount = product.price * product.count;
-        } else {
-          // Если добавляемого товара ещё нет в корзине
-          // Призваиваю количество товара при добавлении
-          product.count = 1;
-          // Генерирую цену товара на остове количества товара в корзине и его цены
-          product.priceToCount = product.price * product.count;
-          // Добавляю товар со всеми параметрами в корзину
-          this.cart.push(product);
-        }
-      } else {
-        // Если товара ещё нет в корзине, то добавляем его
-        // Количество товара при добавлении
-        product.count = 1;
-        // Общая цена на основе количества товара и его цены
-        product.priceToCount = product.price * product.count;
-        // Добавляю товар в корзину
-        this.cart.push(product);
-      }
-      // Количество товара в корзине
-      this.cartInfo.countProductsInCart++;
-
-      let sum = 0;
-      let countProduct = 0;
-
-      this.cart.forEach((item) => {
-        sum = sum + item.priceToCount;
-        countProduct = countProduct + item.count;
-      });
-      this.cartInfo.cartSumPrice = sum;
-      this.cartInfo.countProductsInCart = countProduct;
-      this.cartOn = true;
-    },
-    delCart(product, index) {
-      this.cart.splice(index, 1);
-      this.cartSumPrice = this.cartSumPrice - product.priceToCount;
-      this.countProductsInCart = this.countProductsInCart - product.count;
-    },
-  },
+  methods: {},
   computed: {},
 };
 </script>
