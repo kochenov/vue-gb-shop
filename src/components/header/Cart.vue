@@ -118,9 +118,9 @@ export default {
   background-color: #ffffff;
   top: 60px;
   right: 4%;
-  z-index: 1;
+  z-index: 9999;
   padding: 10px;
-  padding-top: 20px;
+  //margin-left: auto;
 
   table {
     width: 100%;
@@ -190,10 +190,17 @@ export default {
 }
 .cart__close {
   position: absolute;
-  top: 3px;
-  right: 5px;
-  background: none;
-  border: none;
+  top: 2px;
+  right: 2px;
+  padding: 1px 3px 0px 4px;
+  background: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    background: rgb(228, 228, 228);
+    border: 1px solid rgb(228, 228, 228);
+  }
   img {
     width: 10px;
   }

@@ -5,7 +5,7 @@
         <a class="header-col-left__logo-link" href="/"
           ><img
             class="header-col-left__logo-img"
-            src="img/top-panel/logo.png"
+            src="/img/top-panel/logo.png"
             alt="Logo" /></a
         ><a class="header-col-left__search-link" href="#"
           ><svg
@@ -74,10 +74,12 @@
           >
         </li>
       </ul>
-      <Cart />
     </div>
   </header>
-  <TopNav @closeMenu="onMenu = false" v-show="onMenu" />
+  <Cart />
+  <transition name="slide-fade">
+    <TopNav @closeMenu="onMenu = false" v-show="onMenu" />
+  </transition>
 </template>
 <script>
 import TopNav from "@/components/header/TopNav";
@@ -109,7 +111,7 @@ export default {
 <style lang="scss">
 // Секция - ШАПКА САЙТА
 .header {
-  position: fixed;
+  position: relative;
   width: 100%;
   top: 0;
   z-index: 9999;
@@ -218,5 +220,21 @@ export default {
 
 .header-wrapper {
   position: relative;
+}
+
+/* Анимации появления и исчезновения могут иметь    */
+/* различные продолжительности и функции плавности. */
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(-100%);
+  //opacity: 0;
 }
 </style>
