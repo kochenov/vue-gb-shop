@@ -150,6 +150,28 @@ export default {
         .finally(() => {});
       commit("setCartStatusOpen");
     },
+    actionUpdateProductFromCart({ commit }, product) {
+      axios({
+        method: "PUT",
+        url: `/api/v1/cart/${product.id}`,
+        params: {
+          //user_key_id: "USER_KEY_ID",
+        },
+        data: JSON.stringify(product),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then(() => {
+          commit("setCountProductsInCartPlus");
+          commit("setSumPriceProductInCart");
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
+      commit("setCartStatusOpen");
+    },
     /**
      * Добавляет товар в корзину и записывает данные в базу
      * Перед добавлением проверяет есть ли товар в корзине (если есть то не добавляет),

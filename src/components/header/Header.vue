@@ -2,12 +2,14 @@
   <header class="header">
     <div class="container header-wrapper">
       <div class="header-col-left">
-        <router-link class="header-col-left__logo-link" to="/"
-          ><img
+        <router-link class="header-col-left__logo-link" to="/">
+          <img
             class="header-col-left__logo-img"
             src="/img/top-panel/logo.png"
-            alt="Logo" /></router-link
-        ><a class="header-col-left__search-link" href="#"
+            alt="Logo"
+          />
+        </router-link>
+        <a class="header-col-left__search-link" href="#"
           ><svg
             width="27"
             height="29"

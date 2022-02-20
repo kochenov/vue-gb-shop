@@ -3,9 +3,17 @@
     <h2 class="hidden">Content Cart</h2>
     <div class="order__products">
       <div class="order__product-items">
-        <h3 v-if="products.length === 0" style="text-align: center">
-          Нет товаров в корзине, доступных к покупке.
-        </h3>
+        <div
+          v-if="products.length === 0"
+          style="text-align: center; margin: 100px 0"
+        >
+          <h3 style="padding: 30px">
+            Нет товаров в корзине, доступных к покупке.
+          </h3>
+          <router-link to="/products" class="order__control_link">
+            Перейти в каталог товаров</router-link
+          >
+        </div>
 
         <div
           v-for="product in products"
@@ -17,7 +25,9 @@
           </div>
           <div class="order__product-info">
             <h3 class="order__product-name">
-              <a :to="'/product/' + product.id">{{ product.title }}</a>
+              <router-link :to="'/product/' + product.id">{{
+                product.title
+              }}</router-link>
             </h3>
             <div class="order__product-description">
               <p>
@@ -25,14 +35,7 @@
               </p>
               <p>Color: Red</p>
               <p>Size: Xl</p>
-              <p>
-                Quantity:<input
-                  class="order__product-quant"
-                  type="number"
-                  :value="product.count"
-                  min="1"
-                />
-              </p>
+              <p>Quantity:<InputCount :product="product" /></p>
             </div>
             <a
               @click="delProduct(product)"
@@ -72,9 +75,13 @@
             GET A QUOTE
           </button>
         </form>
-        <div class="order__total">
-          <p class="order__sub-total">SUB TOTAL<span>$900</span></p>
-          <p class="order__total-price">GRAND TOTAL<span>$900</span></p>
+        <div v-if="products.length > 0" class="order__total">
+          <p class="order__sub-total">
+            SUB TOTAL<span>{{ cartSumPrice }}</span>
+          </p>
+          <p class="order__total-price">
+            GRAND TOTAL<span>{{ cartSumPrice }}</span>
+          </p>
           <button class="order__control_link order__form-submit">
             PROCEED TO CHECKOUT
           </button>
@@ -85,10 +92,17 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import InputCount from "@/components/page/orderUI/InputCount";
 
 export default {
+  components: {
+    InputCount,
+  },
   data() {
     return {};
+  },
+  mounted() {
+    this.$store.dispatch("actionCloseCart");
   },
   computed: {
     ...mapGetters({
@@ -100,6 +114,9 @@ export default {
     // Удаление товара по клику
     delProduct(product) {
       this.$store.dispatch("actionDeleteProductFromCart", product);
+    },
+    editProductInCart(count) {
+      console.log(count);
     },
   },
 };
@@ -367,5 +384,10 @@ export default {
   .order__form-wrap {
     flex-direction: column;
   }
+}
+.order__form-wrap {
+  position: sticky;
+  top: 5px;
+  padding-bottom: 120px;
 }
 </style>
