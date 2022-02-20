@@ -46,7 +46,7 @@
   transform: translateY(0);
   position: absolute;
   transition: transform 0.3s;
-  top: 0;
+  top: 78px;
   right: 0px;
   width: 232px;
   min-height: 764px;

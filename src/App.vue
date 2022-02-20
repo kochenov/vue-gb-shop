@@ -96,7 +96,6 @@ export default {
 </script>
 <style lang="scss">
 body {
-  margin-top: 78px;
   font-family: "Lato", sans-serif;
 }
 #app {
