@@ -1,46 +1,60 @@
 <template>
   <Transition name="bounce">
     <div v-show="cartOn == true" id="cart-info-content">
-      <table>
-        <tbody>
-          <tr>
-            <th>Наименование товара</th>
-            <th>Количество</th>
-            <th>Цена за штуку</th>
-            <th>Итого</th>
-          </tr>
+      <button
+        @click.prevent="$store.dispatch('actionCloseCart')"
+        class="cart__close"
+      >
+        <img src="/img/menu-close.png" alt="" />
+      </button>
+      <div v-if="products.length > 0">
+        <table>
+          <tbody>
+            <tr>
+              <th>Наименование товара</th>
+              <th>Количество</th>
+              <th>Цена за шт.</th>
+              <th>Итог</th>
+            </tr>
 
-          <tr
-            v-for="(product, index) in productsMax"
-            :key="index"
-            class="cart-product-item"
-          >
-            <td class="cart-product-name">
-              <span>{{ product.title }}</span>
-              <button @click="delProduct(product)" class="delete">
-                <i class="fa-solid fa-delete-left"></i>
-              </button>
-            </td>
-            <td class="cart-product-count">
-              {{ product.count }}
-            </td>
-            <td class="catr-product-price">${{ product.price }}</td>
-            <td class="catr-product-price-count">
-              ${{ product.price * product.count }}
-            </td>
-          </tr>
-          <tr v-if="products.length > 5">
-            <td colspan="4" class="max-product">
-              <b>... и ещё {{ products.length - 5 }}</b>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p>
-        Итого:
-        <span class="products-price-count">${{ cartSumPrice }}</span>
-      </p>
-      <a href="cart.html">Перейти к оформлению</a>
+            <tr
+              v-for="(product, index) in productsMax"
+              :key="index"
+              class="cart-product-item"
+            >
+              <td class="cart-product-name">
+                <span>{{ product.title }}</span>
+                <button @click="delProduct(product)" class="delete">
+                  <i class="fa-solid fa-delete-left"></i>
+                </button>
+              </td>
+              <td class="cart-product-count">
+                {{ product.count }}
+              </td>
+              <td class="catr-product-price">${{ product.price }}</td>
+              <td class="catr-product-price-count">
+                ${{ product.price * product.count }}
+              </td>
+            </tr>
+            <tr v-if="products.length > 5">
+              <td colspan="4" class="max-product">
+                <b>... и ещё {{ products.length - 5 }}</b>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Итого:
+          <span class="products-price-count">${{ cartSumPrice }}</span>
+        </p>
+        <a href="cart.html">Перейти к оформлению</a>
+      </div>
+      <div v-else class="no-products">
+        <p>
+          Добавьте товары в корзину нажав на кнопку в карточке товара, кнопка
+          появится при наведении курсора мыши на товар
+        </p>
+      </div>
     </div>
   </Transition>
 </template>
@@ -48,10 +62,7 @@
 import { mapGetters } from "vuex";
 export default {
   data() {
-    return {
-      //cartOn: false,
-      //cartSumPrice: this.$root.cartSumPrice,
-    };
+    return {};
   },
   computed: {
     ...mapGetters({
@@ -70,6 +81,7 @@ export default {
     },
   },
   methods: {
+    // Удаление товара по клику
     delProduct(product) {
       this.$store.dispatch("actionDeleteProductFromCart", product);
     },
@@ -108,10 +120,11 @@ export default {
   right: 4%;
   z-index: 1;
   padding: 10px;
+  padding-top: 20px;
 
   table {
     width: 100%;
-    font-size: 12px;
+    font-size: 11px;
     border: 1px solid #ccc;
 
     th {
@@ -166,5 +179,29 @@ export default {
   100% {
     transform: scale(1);
   }
+}
+.no-products {
+  p {
+    text-align: center !important;
+  }
+
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+.cart__close {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  background: none;
+  border: none;
+  img {
+    width: 10px;
+  }
+  cursor: pointer;
+}
+.cart-product-count,
+.catr-product-price,
+.catr-product-price-count {
+  text-align: center;
 }
 </style>
