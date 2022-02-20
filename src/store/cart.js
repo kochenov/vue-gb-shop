@@ -207,5 +207,8 @@ export default {
         })
         .finally(() => {});
     },
+    actionCloseCart({ commit }) {
+      commit("setCartStatus");
+    },
   },
 };

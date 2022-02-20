@@ -1,7 +1,7 @@
 <template>
   <ul class="products__items">
     <li
-      v-for="(product, index) in products"
+      v-for="(product, index) in countProductView"
       :key="index"
       class="products__item"
     >
@@ -22,21 +22,16 @@
             >Add to Card
           </button>
         </div>
-        <img
-          class="products__img"
-          :src="'/img/card/' + product.id + '.png'"
-          :alt="product.title"
-        />
+        <img class="products__img" :src="product.image" :alt="product.title" />
       </div>
       <div class="products__wrap-description">
         <h3 class="products__title">
-          <!-- <router-link
-              :to="'/product/' + product.id"
-              class="products__title-link"
-            >
-              {{ product.title }}
-            </router-link> -->
-          {{ product.title }}
+          <router-link
+            :to="'/product/' + product.id"
+            class="products__title-link"
+          >
+            {{ product.title }}
+          </router-link>
         </h3>
         <p class="products__description">
           {{ product.description }}
@@ -49,7 +44,8 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  props: { products: Array },
+  props: { count: Number },
+
   data() {
     return {};
   },
@@ -58,23 +54,23 @@ export default {
       let productCart = this.cartProducts.find(
         (item) => item.id === product.id
       );
-      console.log(productCart);
       // Если товар есть в корзине
       if (productCart) {
         this.$store.dispatch("actionEditProductFromCart", productCart);
       } else {
         this.$store.dispatch("actionAddProductToCart", product);
       }
-
-      //this.$root.addCart(product);
     },
   },
   computed: {
     ...mapGetters({
-      //cartOn: "getCartStatus",
+      products: "getProducts",
       cartProducts: "getCart",
-      //cartSumPrice: "getSumPriceProductInCart",
     }),
+
+    countProductView() {
+      return this.products.slice(0, this.count);
+    },
   },
 };
 </script>

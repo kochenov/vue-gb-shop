@@ -4,7 +4,7 @@
     <p class="products__section-description">
       Shop for items based on what we featured in this week
     </p>
-    <ProductList :products="products" />
+    <ProductList :count="6" />
     <div class="products__wrap-button">
       <a class="products__button" href="catalog.html">Browse All Product</a>
     </div>
@@ -20,11 +20,7 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    products() {
-      return this.$store.getters.getProducts;
-    },
-  },
+  computed: {},
   methods: {},
 };
 </script>
