@@ -25,7 +25,7 @@
               <td class="cart-product-name">
                 <span>{{ product.title }}</span>
                 <button @click="delProduct(product)" class="delete">
-                  <i class="fa-solid fa-delete-left"></i>
+                  <img src="/img/menu-close.png" alt="" />
                 </button>
               </td>
               <td class="cart-product-count">
@@ -91,6 +91,9 @@ export default {
 <style lang="scss">
 .delete {
   cursor: pointer;
+  img {
+    width: 10px;
+  }
   i {
     font-size: 12px !important;
     color: black !important;
