@@ -5,7 +5,7 @@
       <div class="order__product-items">
         <div
           v-if="products.length === 0"
-          style="text-align: center; margin: 100px 0"
+          style="text-align: center; margin: 70px 0"
         >
           <h3 style="padding: 30px">
             Нет товаров в корзине, доступных к покупке.
@@ -141,7 +141,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    overflow: hidden;
   }
   &__product-item {
     display: flex;
@@ -330,6 +329,7 @@ export default {
     flex-direction: column;
     align-items: center;
     padding-bottom: 128px;
+    overflow: hidden;
   }
   .order__form {
     width: 100%;
