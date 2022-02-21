@@ -56,7 +56,8 @@ export default {
       );
       // Если товар есть в корзине
       if (productCart) {
-        this.$store.dispatch("actionEditProductFromCart", productCart);
+        ++productCart.count;
+        this.$store.dispatch("actionUpdateProductFromCart", productCart);
       } else {
         this.$store.dispatch("actionAddProductToCart", product);
       }

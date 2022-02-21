@@ -122,34 +122,12 @@ export default {
         })
         .finally(() => {});
     },
+
     /**
      * Изменяет товар в корзине, а именно его количество, и итоговую цену
      * @param {*} commit
-     * @param {*} product
+     * @param {Object} product Товар
      */
-    actionEditProductFromCart({ commit }, product) {
-      ++product.count;
-      axios({
-        method: "PUT",
-        url: `/api/v1/cart/${product.id}`,
-        params: {
-          //user_key_id: "USER_KEY_ID",
-        },
-        data: JSON.stringify(product),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      })
-        .then(() => {
-          commit("setCountProductsInCartPlus");
-          commit("setSumPriceProductInCart");
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {});
-      commit("setCartStatusOpen");
-    },
     actionUpdateProductFromCart({ commit }, product) {
       axios({
         method: "PUT",
