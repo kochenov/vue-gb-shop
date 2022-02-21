@@ -14,38 +14,39 @@
             Перейти в каталог товаров</router-link
           >
         </div>
-
-        <div
-          v-for="product in products"
-          :key="product.id"
-          class="order__product-item"
-        >
-          <div class="order__product-img">
-            <img :src="product.image" alt="product.title" />
-          </div>
-          <div class="order__product-info">
-            <h3 class="order__product-name">
-              <router-link :to="'/product/' + product.id">{{
-                product.title
-              }}</router-link>
-            </h3>
-            <div class="order__product-description">
-              <p>
-                Price:<span class="pink">${{ product.price }}</span>
-              </p>
-              <p>Color: Red</p>
-              <p>Size: Xl</p>
-              <p>Quantity:<InputCount :product="product" /></p>
+        <transition-group name="list">
+          <div
+            v-for="product in products"
+            :key="product.id"
+            class="order__product-item"
+          >
+            <div class="order__product-img">
+              <img :src="product.image" alt="product.title" />
             </div>
-            <a
-              @click="delProduct(product)"
-              class="order__delete-product-link"
-              href="#"
-            >
-              <img src="/img/menu-close.png" alt=""
-            /></a>
+            <div class="order__product-info">
+              <h3 class="order__product-name">
+                <router-link :to="'/product/' + product.id">{{
+                  product.title
+                }}</router-link>
+              </h3>
+              <div class="order__product-description">
+                <p>
+                  Price:<span class="pink">${{ product.price }}</span>
+                </p>
+                <p>Color: Red</p>
+                <p>Size: Xl</p>
+                <p>Quantity:<InputCount :product="product" /></p>
+              </div>
+              <a
+                @click.prevent="delProduct(product)"
+                class="order__delete-product-link"
+                href="#"
+              >
+                <img src="/img/menu-close.png" alt=""
+              /></a>
+            </div>
           </div>
-        </div>
+        </transition-group>
       </div>
       <div v-if="products.length > 0" class="order__control-buttons">
         <a class="order__control_link" href="#">Clear shopping cart</a
@@ -140,6 +141,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 40px;
+    overflow: hidden;
   }
   &__product-item {
     display: flex;
@@ -170,6 +172,7 @@ export default {
     position: absolute;
     top: 28px;
     right: 22px;
+    cursor: pointer;
     &:hover {
       animation: rotate-center 0.6s ease-in-out both;
     }
@@ -307,6 +310,21 @@ export default {
     transform: rotate(360deg);
   }
 }
+
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
 @media (max-width: 1180px) {
   .order {
     flex-direction: column;
