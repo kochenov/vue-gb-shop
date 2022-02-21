@@ -10,7 +10,7 @@
           <h3 style="padding: 30px">
             Нет товаров в корзине, доступных к покупке.
           </h3>
-          <router-link to="/products" class="order__control_link">
+          <router-link to="/catalog" class="order__control_link">
             Перейти в каталог товаров</router-link
           >
         </div>
