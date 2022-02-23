@@ -33,6 +33,7 @@ import ProductList from "@/components/products/ProductList";
 import SortWrap from "@/components/page/catalog/sort/SortWrap";
 
 export default {
+  name: "Catalog",
   components: {
     Subheader,
     ProductList,

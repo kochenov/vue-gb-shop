@@ -10,6 +10,11 @@
     </div>
   </section>
 </template>
+<script>
+export default {
+  name: "Subheader",
+};
+</script>
 <style lang="scss">
 .subheader {
   background: #f8f3f4;

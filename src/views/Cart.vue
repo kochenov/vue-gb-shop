@@ -7,6 +7,7 @@ import Subheader from "@/components/page/Subheader";
 import Order from "@/components/page/Order";
 
 export default {
+  name: "Cart",
   components: {
     Subheader,
     Order,
