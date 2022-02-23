@@ -22,6 +22,23 @@ app.get("/api/v1/catalog", (req, res) => {
   });
 });
 
+app.get("/api/v1/product/:id", (req, res) => {
+  fs.readFile(catalog_path, "utf-8", (err, data) => {
+    if (!err) {
+      const products = JSON.parse(data);
+      products.forEach((value) => {
+        if (value.id == req.params.id) {
+          res.send(JSON.stringify(value));
+        }
+      });
+      //console.log(products);
+      //res.send(JSON.stringify(product));
+    } else {
+      res.status(500).send(err);
+    }
+  });
+});
+
 app.get("/api/v1/cart", (req, res) => {
   fs.readFile(cart_path, "utf-8", (err, data) => {
     if (!err) {
