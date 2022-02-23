@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="product">
     <Subheader />
     <Product />
     <section class="products container">
@@ -17,8 +17,21 @@ export default {
     return {};
   },
   components: { Subheader, Product, ProductList },
+  mounted() {
+    this.$store.dispatch("loadOneProduct", this.$route.params.id);
+  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+#product {
+  .products__items {
+    overflow: hidden;
+    grid-auto-flow: column;
+    gap: 16px;
+  }
+}
+#product .products {
+  padding: 128px 0;
+}
 </style>

@@ -1,22 +1,21 @@
 <template>
   <section class="product-info container">
     <div class="product-info__category">WOMEN COLLECTION</div>
-    <h2 class="product-info__name">{{ typeof product }}</h2>
+    <h2 class="product-info__name">{{ product.title }}</h2>
     <div class="product-info__description">
       <p>
-        Compellingly actualize fully researched processes before proactive
-        outsourcing. Progressively syndicate collaborative architectures before
-        cutting-edge services. Completely visualize parallel core competencies
-        rather than exceptional portals.
+        {{ product.description }}
       </p>
-      <p class="product-info__price">$561</p>
+      <p class="product-info__price">${{ product.price }}</p>
+
       <ul class="sort__items">
         <li class="sort__item"><a href="#">CHOOSE COLOR</a></li>
         <li class="sort__item"><a href="#">CHOOSE SIZE</a></li>
         <li class="sort__item"><a href="#">QUANTITY</a></li>
       </ul>
+
       <div class="products__wrap-button">
-        <a class="products__button" href="cart.html">
+        <a @click.prevent="" class="products__button" href="/cart">
           <img src="/img/product/cart-pink.svg" alt="" />Add to Cart
         </a>
       </div>
@@ -30,17 +29,166 @@ import { mapGetters } from "vuex";
 export default {
   name: "ProductInfo",
   computed: {
+    // product() {
+    //   //console.log(this.$store.getters.getOneProduct);
+    //   return this.$store.getters.getOneProduct;
+    // },
     ...mapGetters({
-      products: "getProducts",
+      product: "getOneProduct",
     }),
-  },
-  mounted() {
-    console.log(this.product);
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.sort {
+  padding-top: 51px;
+  padding-bottom: 64px;
+  display: flex;
+
+  &__menu-link {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+
+    img {
+      padding-left: 11px;
+    }
+  }
+
+  &__items {
+    display: flex;
+    gap: 37px;
+    // margin-left: 30px;
+    padding-top: 20px;
+  }
+  &__item-details::-webkit-details-marker {
+    display: none;
+  }
+  &__item-summary {
+    display: block;
+  }
+  &_item,
+  &__item-sort-summary {
+    font-size: 15px;
+    line-height: 17px;
+    color: #6f6e6e;
+  }
+  &__item {
+    position: relative;
+    .sort__item-details {
+      font-size: 15px;
+      line-height: 17px;
+      color: #6f6e6e;
+    }
+    a {
+      color: #6f6e6e;
+    }
+  }
+  &__item::after {
+    content: url("/img/sort_sort.png");
+    padding-left: 10px;
+    color: #6f6e6e;
+    position: absolute;
+    right: -17px;
+    top: -3px;
+  }
+  // Фильтры
+  &__filter {
+    width: 360px;
+    position: relative;
+  }
+  &__filter-content {
+    width: 360px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    margin-bottom: -2px;
+    position: absolute;
+    background-color: #ffffff;
+    z-index: 10000;
+    box-shadow: 6px 27px 27px rgba(0, 0, 0, 0.21);
+  }
+  &__menu-summary {
+    padding-left: 16px;
+    padding-top: 16px;
+    transition: 0.3s;
+    list-style: none;
+    svg {
+      margin-left: 12px;
+      fill: #000000;
+    }
+  }
+  &__menu-sub-details::-webkit-details-marker,
+  &__menu-details::-webkit-details-marker,
+  &__item-sort-details::-webkit-details-marker {
+    display: none;
+  }
+  &__item-sort-details {
+    position: relative;
+  }
+  &__menu-details[open] {
+    background: #ffffff;
+    box-shadow: 6px 4px 35px rgba(0, 0, 0, 0.21);
+    color: #f16d7f;
+    svg {
+      fill: #f16d7f;
+    }
+  }
+  &__menu-sub-summary,
+  &__menu-summary {
+    display: block;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  &__menu-sub-summary {
+    border-left: 5px solid #f16d7f;
+    border-bottom: 1px solid #ebebeb;
+    padding: 13px;
+    margin-top: 18px;
+  }
+  &__menu-sub-summary-items {
+    padding: 24px 0px 12px 34px;
+  }
+  &__menu-sub-summary-item {
+    margin-bottom: 11px;
+    a {
+      font-size: 14px;
+      line-height: 17px;
+      color: #6f6e6e;
+    }
+  }
+  &__item-sort-summary {
+    font-size: 15px;
+    line-height: 17px;
+    color: #6f6e6e;
+    cursor: pointer;
+    display: block;
+  }
+  &__item-sort-summary-items {
+    position: absolute;
+    z-index: 10000;
+    background-color: #ffffff;
+    min-width: 80px;
+    box-shadow: 6px 4px 35px rgba(0, 0, 0, 0.21);
+    padding: 7px 0px 0px 9px;
+    top: 25px;
+  }
+  &__item-sort-summary-item {
+    margin-bottom: 9px;
+    input {
+      margin-right: 9px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      line-height: 16px;
+      color: #6f6e6e;
+    }
+  }
+}
 .product-info {
   position: relative; // добавил потому что не работали слои
   border: 1px solid #eaeaea;

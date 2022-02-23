@@ -3,13 +3,13 @@ import Cart from "./cart";
 import axios from "axios";
 
 export default createStore({
-  state: { products: [], product: [] },
+  state: { products: [], oneProduct: [] },
   mutations: {
     setProducts: (state, products) => {
       state.products = products;
     },
-    setProduct: (state, product) => {
-      state.product = product;
+    setOneProduct: (state, product) => {
+      state.oneProduct = product;
     },
   },
   actions: {
@@ -49,8 +49,8 @@ export default createStore({
         },
       })
         .then((response) => {
-          commit("setProduct", response.data);
-          //console.log(response.data);
+          commit("setOneProduct", response.data);
+          // console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -60,7 +60,7 @@ export default createStore({
   },
   getters: {
     getProducts: (state) => [...state.products],
-    getProduct: (state) => [...state.product],
+    getOneProduct: (state) => state.oneProduct,
   },
   modules: { Cart },
 });
