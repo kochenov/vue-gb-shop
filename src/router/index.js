@@ -17,6 +17,11 @@ const routes = [
     component: () => import("../views/Catalog.vue"),
   },
   {
+    path: "/product/:id",
+    came: "catalog",
+    component: () => import("../views/Product.vue"),
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("../views/404.vue"),
