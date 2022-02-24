@@ -15,7 +15,11 @@
       </ul>
 
       <div class="products__wrap-button">
-        <a @click.prevent="" class="products__button" href="/cart">
+        <a
+          @click.prevent="addCart(product)"
+          class="products__button"
+          href="/cart"
+        >
           <img src="/img/product/cart-pink.svg" alt="" />Add to Cart
         </a>
       </div>
@@ -35,7 +39,22 @@ export default {
     // },
     ...mapGetters({
       product: "getOneProduct",
+      cartProducts: "getCart",
     }),
+  },
+  methods: {
+    addCart(product) {
+      let productCart = this.cartProducts.find(
+        (item) => item.id === product.id
+      );
+      // Если товар есть в корзине
+      if (productCart) {
+        ++productCart.count;
+        this.$store.dispatch("actionUpdateProductFromCart", productCart);
+      } else {
+        this.$store.dispatch("actionAddProductToCart", product);
+      }
+    },
   },
 };
 </script>
