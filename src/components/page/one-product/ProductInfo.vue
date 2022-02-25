@@ -32,6 +32,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "ProductInfo",
+
   computed: {
     // product() {
     //   //console.log(this.$store.getters.getOneProduct);

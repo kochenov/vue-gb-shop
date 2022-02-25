@@ -17,8 +17,10 @@ export default {
     return {};
   },
   components: { Subheader, Product, ProductList },
+
   mounted() {
     this.$store.dispatch("loadOneProduct", this.$route.params.id);
+    console.log("Mounted");
   },
 };
 </script>

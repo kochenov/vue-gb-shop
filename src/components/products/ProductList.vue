@@ -27,6 +27,7 @@
       <div class="products__wrap-description">
         <h3 class="products__title">
           <router-link
+            @click="freshProductInfo(product.id)"
             :to="'/product/' + product.id"
             class="products__title-link"
           >
@@ -51,6 +52,10 @@ export default {
     return {};
   },
   methods: {
+    freshProductInfo(id) {
+      this.$store.dispatch("loadOneProduct", id);
+      window.scrollTo(0, 100);
+    },
     addCart(product) {
       let productCart = this.cartProducts.find(
         (item) => item.id === product.id

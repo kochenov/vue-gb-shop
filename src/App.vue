@@ -26,6 +26,9 @@ export default {
 };
 </script>
 <style lang="scss">
+html {
+  scroll-behavior: smooth;
+}
 body {
   font-family: "Lato", sans-serif;
 }
