@@ -1,50 +1,39 @@
 <template>
-  <Header :cart="cart" />
-  <component :is="layout">
-    <router-view />
-  </component>
+  <Header />
+  <router-view />
   <FeedBack />
   <Footer />
 </template>
 <script>
-import IndexLayout from "@/layouts/IndexLayout";
 import Header from "@/components/header/Header";
 import FeedBack from "@/components/footer/FeedBack";
 import Footer from "@/components/footer/Footer";
 export default {
   components: {
-    IndexLayout,
     Header,
     Footer,
     FeedBack,
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("loadProducts");
+    this.$store.dispatch("loadProductsFromCart");
+  },
   data() {
-    return {
-      cartOn: false,
-      cart: [],
-      countProductsInCart: 0,
-      cartSumPrice: 0,
-    };
+    return {};
   },
-  methods: {
-    delCart(product, index) {
-      this.cart.splice(index, 1);
-      this.cartSumPrice = this.cartSumPrice - product.priceToCount;
-      this.countProductsInCart = this.countProductsInCart - product.count;
-    },
-  },
-  computed: {
-    layout() {
-      return this.$route.meta.layout + "-layout";
-    },
-  },
+  methods: {},
+  computed: {},
 };
 </script>
 <style lang="scss">
+html {
+  scroll-behavior: smooth;
+}
 body {
-  margin-top: 78px;
   font-family: "Lato", sans-serif;
+}
+#app {
+  position: relative;
 }
 
 a {

@@ -1,59 +1,89 @@
 <template>
   <Transition name="bounce">
     <div v-show="cartOn == true" id="cart-info-content">
-      <table>
-        <tbody>
-          <tr>
-            <th>Наименование товара</th>
-            <th>Количество</th>
-            <th>Цена за штуку</th>
-            <th>Итого</th>
-          </tr>
-          {{
-            products.lengh
-          }}
-          <tr
-            class="cart-product-item"
-            v-for="(product, index) in products"
-            :key="index"
-          >
-            <td class="cart-product-name">
-              <span>{{ product.title }}</span>
-              <button @click="delProduct(product, index)" class="delete">
-                <i class="fa-solid fa-delete-left"></i>
-              </button>
-            </td>
-            <td class="cart-product-count">{{ product.count }}</td>
-            <td class="catr-product-price">${{ product.price }}</td>
-            <td class="catr-product-price-count">
-              ${{ product.priceToCount }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p>
-        Итого:
-        <span class="products-price-count">${{ this.$root.cartSumPrice }}</span>
-      </p>
-      <a href="cart.html">Перейти к оформлению</a>
+      <button
+        @click.prevent="$store.dispatch('actionCloseCart')"
+        class="cart__close"
+      >
+        <img src="/img/menu-close.png" alt="" />
+      </button>
+      <div v-if="products.length > 0">
+        <table>
+          <tbody>
+            <tr>
+              <th>Наименование товара</th>
+              <th>Количество</th>
+              <th>Цена за шт.</th>
+              <th>Итог</th>
+            </tr>
+
+            <tr
+              v-for="(product, index) in productsMax"
+              :key="index"
+              class="cart-product-item"
+            >
+              <td class="cart-product-name">
+                <span>{{ product.title }}</span>
+                <button @click="delProduct(product)" class="delete">
+                  <img src="/img/menu-close.png" alt="" />
+                </button>
+              </td>
+              <td class="cart-product-count">
+                {{ product.count }}
+              </td>
+              <td class="catr-product-price">${{ product.price }}</td>
+              <td class="catr-product-price-count">
+                ${{ product.price * product.count }}
+              </td>
+            </tr>
+            <tr v-if="products.length > 5">
+              <td colspan="4" class="max-product">
+                <b>... и ещё {{ products.length - 5 }}</b>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Итого:
+          <span class="products-price-count">${{ cartSumPrice }}</span>
+        </p>
+        <router-link to="/cart">Перейти к оформлению</router-link>
+      </div>
+      <div v-else class="no-products">
+        <p>
+          Добавьте товары в корзину нажав на кнопку в карточке товара, кнопка
+          появится при наведении курсора мыши на товар
+        </p>
+      </div>
     </div>
   </Transition>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
-  props: {
-    cartOn: Boolean,
-    products: Array,
-  },
   data() {
-    return {
-      //cartOn: false,
-      //cartSumPrice: this.$root.cartSumPrice,
-    };
+    return {};
+  },
+  computed: {
+    ...mapGetters({
+      cartOn: "getCartStatus",
+      products: "getCart",
+      cartSumPrice: "getSumPriceProductInCart",
+    }),
+    productsMax() {
+      let prod = null;
+      if (this.products.length < 5) {
+        prod = this.products;
+      } else {
+        prod = this.products.slice(0, 5);
+      }
+      return prod;
+    },
   },
   methods: {
-    delProduct(price, index) {
-      this.$root.delCart(price, index);
+    // Удаление товара по клику
+    delProduct(product) {
+      this.$store.dispatch("actionDeleteProductFromCart", product);
     },
   },
 };
@@ -61,6 +91,9 @@ export default {
 <style lang="scss">
 .delete {
   cursor: pointer;
+  img {
+    width: 10px;
+  }
   i {
     font-size: 12px !important;
     color: black !important;
@@ -88,12 +121,13 @@ export default {
   background-color: #ffffff;
   top: 60px;
   right: 4%;
-  z-index: 1;
+  z-index: 9999;
   padding: 10px;
+  //margin-left: auto;
 
   table {
     width: 100%;
-    font-size: 12px;
+    font-size: 11px;
     border: 1px solid #ccc;
 
     th {
@@ -127,6 +161,10 @@ export default {
     margin: 2px auto;
   }
 }
+.max-product {
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
 
 .bounce-enter-active {
   animation: bounce-in 0.5s;
@@ -144,5 +182,36 @@ export default {
   100% {
     transform: scale(1);
   }
+}
+.no-products {
+  p {
+    text-align: center !important;
+  }
+
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+.cart__close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 1px 3px 0px 4px;
+  background: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    background: rgb(228, 228, 228);
+    border: 1px solid rgb(228, 228, 228);
+  }
+  img {
+    width: 10px;
+  }
+  cursor: pointer;
+}
+.cart-product-count,
+.catr-product-price,
+.catr-product-price-count {
+  text-align: center;
 }
 </style>

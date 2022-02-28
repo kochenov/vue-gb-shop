@@ -1,39 +1,38 @@
 <template>
-  <input id="menu" type="checkbox" />
   <nav class="menu">
-    <label class="menu__close" for="menu">
-      <img src="/img/menu-close.png" alt=""
-    /></label>
+    <button class="menu__close" @click.prevent="$emit('closeMenu')">
+      <img src="/img/menu-close.png" alt="" />
+    </button>
     <p class="menu__title">MENU</p>
     <ul class="menu__items">
       <li class="menu__item">
-        <a href="catalog.html">MAN</a>
+        <router-link to="/catalog">MAN</router-link>
         <ul class="menu__sub-items">
-          <li><a href="catalog.html">Accessories</a></li>
-          <li><a href="catalog.html">Bags</a></li>
-          <li><a href="catalog.html">Denim</a></li>
-          <li><a href="catalog.html">T-Shirts</a></li>
+          <li><router-link to="/catalog">Accessories</router-link></li>
+          <li><router-link to="/catalog">Bags</router-link></li>
+          <li><router-link to="/catalog">Denim</router-link></li>
+          <li><router-link to="/catalog">T-Shirts</router-link></li>
         </ul>
       </li>
       <li class="menu__item">
-        <a href="catalog.html">WOMAN</a>
+        <router-link to="/catalog">WOMAN</router-link>
         <ul class="menu__sub-items">
-          <li><a href="catalog.html">Accessories</a></li>
-          <li><a href="catalog.html">Jackets &amp; Coats</a></li>
-          <li><a href="catalog.html">Polos</a></li>
-          <li><a href="catalog.html">T-Shirts</a></li>
-          <li><a href="catalog.html">Shirts</a></li>
+          <li><router-link to="/catalog">Accessories</router-link></li>
+          <li><router-link to="/catalog">Jackets &amp; Coats</router-link></li>
+          <li><router-link to="/catalog">Polos</router-link></li>
+          <li><router-link to="/catalog">T-Shirts</router-link></li>
+          <li><router-link to="/catalog">Shirts</router-link></li>
         </ul>
       </li>
       <li class="menu__item">
-        <a href="catalog.html">KIDS</a>
+        <router-link to="/catalog">KIDS</router-link>
         <ul class="menu__sub-items">
-          <li><a href="catalog.html">Accessories</a></li>
-          <li><a href="catalog.html">Jackets &amp; Coats</a></li>
-          <li><a href="catalog.html">Polos</a></li>
-          <li><a href="catalog.html">T-Shirts</a></li>
-          <li><a href="catalog.html">Shirts</a></li>
-          <li><a href="catalog.html">Bags</a></li>
+          <li><router-link to="/catalog">Accessories</router-link></li>
+          <li><router-link to="/catalog">Jackets &amp; Coats</router-link></li>
+          <li><router-link to="/catalog">Polos</router-link></li>
+          <li><router-link to="/catalog">T-Shirts</router-link></li>
+          <li><router-link to="/catalog">Shirts</router-link></li>
+          <li><router-link to="/catalog">Bags</router-link></li>
         </ul>
       </li>
     </ul>
@@ -44,10 +43,10 @@
   overflow: hidden;
   box-shadow: 6px 4px 35px rgba(0, 0, 0, 0.21);
   background: #ffffff;
-  transform: translateY(-120%);
+  transform: translateY(0);
   position: absolute;
   transition: transform 0.3s;
-  top: 77.5px;
+  top: 78px;
   right: 0px;
   width: 232px;
   min-height: 764px;
@@ -60,6 +59,8 @@
     padding-bottom: 0;
     top: 0;
     right: 0;
+    border: none;
+    background: transparent;
     cursor: pointer;
     position: absolute;
   }

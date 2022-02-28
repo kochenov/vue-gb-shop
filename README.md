@@ -1,15 +1,32 @@
-# vuelesson
+# vuelesson - Интернет магазин GB(Vue.js)
+Магазин разрабатывался в рамках обучающей программы на курсе "Профессиональный JavaScript".
 
-## Project setup
+Вёрстка шаблона сделана по макету Figma в рамках обучения на курсе "Профессиональная вёрстка".
+
+Упор был сделан на разработку функционала корзины, внедрение вёрстки сайта в систему VUE CLI 4 
+
+Используется: 
+* Vue 3
+* Vuex 4
+* Vue Route 4
+* UnitTest Jest
+* Node.js Express (Имитация API серверной части приложения), 
+
+
+## Установка (Шаг 1)
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Запуск сервера (Шаг 2)
 ```
 npm run serve
-```
 
+```
+### Запуск сервера API (Шаг 3)
+```
+npm run api
+```
 ### Compiles and minifies for production
 ```
 npm run build
