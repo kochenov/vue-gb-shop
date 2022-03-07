@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default createStore({
   state: {
-    urlApi: "http://api-gb-shop.ouui.ru",
+    urlApi: "https://api-gb-shop.ouui.ru",
     products: [],
     oneProduct: [],
   },
