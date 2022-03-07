@@ -16,6 +16,7 @@ export default {
   mutations: {
     // Установка корзины, выгрузка товара в STATE корзины
     setCart: (state, cart) => {
+      //const cartProduct = {};
       state.cart = cart;
     },
     /**
@@ -27,7 +28,7 @@ export default {
       if (!state.cart.some((item) => item.id === product.id)) {
         state.cart.push(product);
         ++state.countProductsInCart;
-        state.sumPriceProductInCart += product.price;
+        state.sumPriceProductInCart += product.product.price;
       }
     },
     // Изменение значения товара в STATE корзины,
@@ -74,7 +75,7 @@ export default {
     setSumPriceProductInCart: (state) => {
       let price = 0;
       state.cart.forEach((product) => {
-        price += product.price * product.count;
+        price += product.product.price * product.count;
       });
       state.sumPriceProductInCart = price;
     },
@@ -87,7 +88,7 @@ export default {
     setCartDeliteProduct: (state, product) => {
       let indx = state.cart.findIndex((p) => p.id == product.id);
       state.countProductsInCart -= product.count;
-      state.sumPriceProductInCart -= product.count * product.price;
+      state.sumPriceProductInCart -= product.count * product.product.price;
       state.cart.splice(indx, 1);
     },
   },
@@ -103,18 +104,19 @@ export default {
     loadProductsFromCart({ commit }) {
       axios({
         method: "GET",
-        url: `/api/v1/cart`,
+        baseURL: `${this.state.urlApi}`,
+        url: `/api/cart`,
         params: {
           //user_key_id: "USER_KEY_ID",
         },
-        data: {},
+        //data: {},
         headers: {
-          "Content-type": "application/json; charset=UTF-8",
+          "Content-type": "application/json",
         },
       })
         .then((response) => {
-          commit("setCart", response.data);
-          commit("setCountProductsInCart", response.data);
+          commit("setCart", response.data.data);
+          commit("setCountProductsInCart", response.data.data);
           commit("setSumPriceProductInCart");
         })
         .catch((error) => {
@@ -129,13 +131,16 @@ export default {
      * @param {Object} product Товар
      */
     actionUpdateProductFromCart({ commit }, product) {
+      console.log(product);
       axios({
-        method: "PUT",
-        url: `/api/v1/cart/${product.id}`,
+        method: "POST",
+        url: `${this.state.urlApi}/api/cart/${product.id}`,
         params: {
-          //user_key_id: "USER_KEY_ID",
+          _method: "PUT",
+          count: product.count,
+          product_id: product.product.id,
         },
-        data: JSON.stringify(product),
+        //data: JSON.stringify(product),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
@@ -162,19 +167,27 @@ export default {
       if (!this.getters.getCart.some((item) => item.id === product.id)) {
         // Если в корзине есть товар
         product.count = 1;
+        //console.log(product);
         axios({
           method: "POST",
-          url: `/api/v1/cart`,
+          url: `${this.state.urlApi}/api/cart`,
           params: {
-            //user_key_id: "USER_KEY_ID",
+            _method: "POST",
+            count: product.count,
+            product_id: product.id,
           },
-          data: JSON.stringify(product),
+          // data: {
+          //   //_method: "POST",
+          //   // count: product.count,
+          //   // product_id: product.id,
+          // },
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
         })
-          .then(() => {
-            commit("setAddToCart", product);
+          .then((response) => {
+            //console.log(response.data.data);
+            commit("setAddToCart", response.data.data);
           })
           .catch((error) => {
             console.log(error);
@@ -192,9 +205,11 @@ export default {
      */
     actionDeleteProductFromCart({ commit }, product) {
       axios({
-        method: "DELETE",
-        url: `/api/v1/cart/delete/${product.id}`,
-        params: {},
+        method: "POST",
+        url: `${this.state.urlApi}/api/cart/${product.id}`,
+        params: {
+          _method: "DELETE",
+        },
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },

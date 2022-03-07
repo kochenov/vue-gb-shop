@@ -22,7 +22,11 @@
             >Add to Card
           </button>
         </div>
-        <img class="products__img" :src="product.image" :alt="product.title" />
+        <img
+          class="products__img"
+          :src="getSrcImg(product.images)"
+          :alt="product.title"
+        />
       </div>
       <div class="products__wrap-description">
         <h3 class="products__title">
@@ -52,13 +56,17 @@ export default {
     return {};
   },
   methods: {
+    getSrcImg(objImgs) {
+      let imageUrl = JSON.parse(objImgs);
+      return imageUrl[1];
+    },
     freshProductInfo(id) {
       this.$store.dispatch("loadOneProduct", id);
       window.scrollTo(0, 100);
     },
     addCart(product) {
       let productCart = this.cartProducts.find(
-        (item) => item.id === product.id
+        (item) => item.product.id === product.id
       );
       // Если товар есть в корзине
       if (productCart) {

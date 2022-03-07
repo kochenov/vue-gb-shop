@@ -23,7 +23,7 @@
               class="cart-product-item"
             >
               <td class="cart-product-name">
-                <span>{{ product.title }}</span>
+                <span>{{ product.product.title }}</span>
                 <button @click="delProduct(product)" class="delete">
                   <img src="/img/menu-close.png" alt="" />
                 </button>
@@ -31,9 +31,9 @@
               <td class="cart-product-count">
                 {{ product.count }}
               </td>
-              <td class="catr-product-price">${{ product.price }}</td>
+              <td class="catr-product-price">${{ product.product.price }}</td>
               <td class="catr-product-price-count">
-                ${{ product.price * product.count }}
+                ${{ product.product.price * product.count }}
               </td>
             </tr>
             <tr v-if="products.length > 5">

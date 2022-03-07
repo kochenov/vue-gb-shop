@@ -3,7 +3,11 @@ import Cart from "./cart";
 import axios from "axios";
 
 export default createStore({
-  state: { products: [], oneProduct: [] },
+  state: {
+    urlApi: "http://api-gb-shop.ouui.ru",
+    products: [],
+    oneProduct: [],
+  },
   mutations: {
     setProducts: (state, products) => {
       state.products = products;
@@ -16,18 +20,18 @@ export default createStore({
     loadProducts({ commit }) {
       axios({
         method: "GET",
-        url: `/api/v1/catalog`,
+        url: `${this.state.urlApi}/api/product/`,
         params: {
           //user_key_id: "USER_KEY_ID",
         },
-        data: {},
+        //data: {},
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
       })
         .then((response) => {
-          commit("setProducts", response.data);
-          //console.log(response.data);
+          commit("setProducts", response.data.data);
+          //console.log(response.data.data[0].images);
         })
         .catch((error) => {
           console.log(error);
@@ -39,18 +43,18 @@ export default createStore({
     loadOneProduct({ commit }, id) {
       axios({
         method: "GET",
-        url: `/api/v1/product/${id}`,
+        url: `${this.state.urlApi}/api/product/${id}`,
         params: {
           //user_key_id: "USER_KEY_ID",
         },
-        data: {},
+        //data: {},
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
       })
         .then((response) => {
-          commit("setOneProduct", response.data);
-          // console.log(response.data);
+          commit("setOneProduct", response.data.data);
+          //JSON.parse(response.data.data.images);
         })
         .catch((error) => {
           console.log(error);

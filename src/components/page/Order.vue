@@ -21,17 +21,20 @@
             class="order__product-item"
           >
             <div class="order__product-img">
-              <img :src="product.image" alt="product.title" />
+              <img
+                :src="getSrcImg(product.product.images)"
+                :alt="product.product.title"
+              />
             </div>
             <div class="order__product-info">
               <h3 class="order__product-name">
                 <router-link :to="'/product/' + product.id">{{
-                  product.title
+                  product.product.title
                 }}</router-link>
               </h3>
               <div class="order__product-description">
                 <p>
-                  Price:<span class="pink">${{ product.price }}</span>
+                  Price:<span class="pink">${{ product.product.price }}</span>
                 </p>
                 <p>Color: Red</p>
                 <p>Size: Xl</p>
@@ -112,6 +115,11 @@ export default {
     }),
   },
   methods: {
+    //
+    getSrcImg(objImgs) {
+      let imageUrl = JSON.parse(objImgs);
+      return imageUrl[1];
+    },
     // Удаление товара по клику
     delProduct(product) {
       this.$store.dispatch("actionDeleteProductFromCart", product);
